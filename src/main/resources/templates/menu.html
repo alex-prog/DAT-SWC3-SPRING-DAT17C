@@ -1,5 +1,6 @@
-<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-light"
-     th:classappend="${user.gender} == 'M' ? 'bg-primary':'bg-danger'" xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="menu" id="navbar_top" class="navbar navbar-expand-lg navbar-light"
+     xmlns:th="http://www.thymeleaf.org">
+<!--th:classappend="${user.gender} == 'M' ? 'bg-primary':'bg-danger'" -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -14,7 +15,9 @@
             </li>
         </ul>
         <span class="navbar-text">
-            Welcome <span th:text="${user.name}"></span>
+            Welcome <span id="name_span">
+                <!--th:text="${user.name}"-->
+            </span>
         </span>
     </div>
 </nav>
