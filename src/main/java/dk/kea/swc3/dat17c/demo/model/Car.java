@@ -1,10 +1,9 @@
 package dk.kea.swc3.dat17c.demo.model;
 
-public class Car
-{
+public class Car {
 	private String brand;
 	private String colour;
-	private int seats;
+	private Integer seats;
 
 	public Car(String brand, String colour, int seats)
 	{

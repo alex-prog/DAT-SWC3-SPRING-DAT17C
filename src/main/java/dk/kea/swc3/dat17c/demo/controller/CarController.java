@@ -11,16 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class CarController
-{
+public class CarController {
 	@GetMapping("/cars")
 	public String viewAllCars(Model model,
 	                          @RequestParam(defaultValue = "{{user}}")
 			                          String name,
 	                          @RequestParam(defaultValue = "-1")
-			                              Integer age,
+			                          Integer age,
 	                          @RequestParam(defaultValue = "F")
-			                              Character gender)
+			                          Character gender)
 	{
 		Car car1 = new Car("Ford", "blue", 5);
 		Car car2 = new Car("Volvo", "grey", 5);
@@ -33,7 +32,7 @@ public class CarController
 		cars.add(car3);
 		cars.add(car4);
 		model.addAttribute("cars", cars);
-		model.addAttribute("user", new User("Muddi", 21, 'F'));
+		model.addAttribute("user", new User("Muddi", 21, 'M'));
 		return "list_of_cars";
 	}
 }

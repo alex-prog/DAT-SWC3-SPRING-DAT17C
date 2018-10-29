@@ -14,11 +14,11 @@ public class UserController {
     //@ResponseBody
     public ModelAndView index(
             @RequestParam(defaultValue = "{{user}}")
-            String name,
+                    String name,
             @RequestParam(defaultValue = "-1")
-            Integer age,
+                    Integer age,
             @RequestParam(defaultValue = "F")
-            Character gender){
+                    Character gender){
 
         User u = new User(name, age, gender);
 
