@@ -1,9 +1,25 @@
 package dk.kea.swc3.dat17c.demo.model;
 
+import javax.persistence.*;
+
+@Entity
 public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private String name;
 	private Integer age;
 	private Character gender;
+
+	public User(){}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -30,9 +46,18 @@ public class User {
 	}
 
 	public User(String name, Integer age, Character gender) {
-		name = name.toLowerCase();
-		this.name = name.substring(0, 1).toUpperCase() + name.substring(1);
+		this.name = name;
 		this.age = age;
 		this.gender = gender;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", age=" + age +
+				", gender=" + gender +
+				'}';
 	}
 }
