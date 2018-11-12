@@ -64,9 +64,9 @@
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="select">Select user:</label>
-                    <select class="form-control" id="select-user" required="required" name="selected-user" >
+                    <select class="form-control" id="select-user" required="required" name="selected-user-id">
                         <option class="dropdown-item" th:each="user : ${users}"
-                                th:text="${user.getName()}" th:value="${user.name}">
+                                th:text="${user.getName()}" th:value="${user.id}">
                         </option>
                     </select>
 

@@ -41,11 +41,12 @@ public class CarController {
 	}
 
 	@PostMapping("/car/save")
-	public String saveIt(Car car, @RequestParam(defaultValue = "NO_NAME", name = "selected-user") String username
-	){
-		car.setUser(userRepository.findByName(username));
+	public String saveIt(Car car, @RequestParam("selected-user-id") Long id
+	)
+	{
+		car.setUser(userRepository.findById(id));
 		if (car.getUser() == null){
-			User user = new User(username, -1, 'N');
+			User user = new User("NO_NAME", -1, 'N');
 			car.setUser(user);
 			userRepository.save(user);
 		}

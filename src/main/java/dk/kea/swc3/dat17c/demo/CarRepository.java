@@ -8,4 +8,6 @@ import java.util.ArrayList;
 
 public interface CarRepository extends CrudRepository<Car, Long> {
 	ArrayList<Car> getAllByBrandIsNotNull();
+
+	Car getCarById(Long id);
 }
