@@ -15,6 +15,7 @@
         <th scope="col">Colour</th>
         <th scope="col">Seats</th>
         <th scope="col">Speed</th>
+        <th scope="col">User</th>
         <th scope="col" class="float-right">
             <a href="/car/save" class="btn btn-success">Add Car</a>
         </th>
@@ -26,7 +27,10 @@
         <td th:text="${car.colour}"></td>
         <td th:text="${car.seats}"></td>
         <td th:text="${car.speed}"></td>
-        <td></td>
+        <td th:text="${car.user.getName()}"></td>
+        <td class="float-right">
+            <button th:onclick="'javascript:deleteCar(' + ${car.id} + ')'" class="btn btn-danger">Delete</button>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -46,6 +50,16 @@
     }
     $('#name_span').text(user.name);
     $('#navbar_top').addClass(genderColour);
+
+    function deleteCar(id) {
+        $.ajax({
+            method: "DELETE",
+            url: "/car/delete/" + id,
+            success: function () {
+                location.reload();
+            }
+        })
+    }
 </script>
 </body>
 </html>
