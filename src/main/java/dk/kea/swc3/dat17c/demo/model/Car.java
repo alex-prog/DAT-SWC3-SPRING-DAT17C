@@ -15,6 +15,10 @@ public class Car {
     @OneToOne
     private User user;
 
+    public Car(){
+
+    }
+
     public Car(String brand, String color, Integer doors, Integer speed, User user) {
         this.brand = brand;
         this.color = color;
