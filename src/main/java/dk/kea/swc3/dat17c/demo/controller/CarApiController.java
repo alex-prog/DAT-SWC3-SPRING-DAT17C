@@ -5,7 +5,6 @@ import dk.kea.swc3.dat17c.demo.UserRepository;
 import dk.kea.swc3.dat17c.demo.model.Car;
 import dk.kea.swc3.dat17c.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,17 +24,14 @@ public class CarApiController {
 	}
 
 	@PostMapping("/car/new")
-	public ResponseEntity<Car> saveNewCar(@RequestParam(defaultValue = "NO_BRAND") String brand,
-	                                      @RequestParam(defaultValue = "NO_COLOUR") String colour,
-	                                      @RequestParam(defaultValue = "-1") Integer seats,
-	                                      @RequestParam(defaultValue = "-1") Integer speed,
-	                                      @RequestParam(defaultValue = "-1") Long user_id)
+	public ResponseEntity<Car> saveNewCar(Car car)
 	{
-		User user = userRepository.findById(user_id);
-		if (user_id == -1) {
+		User user = userRepository.findById(car.getUser().getId());
+		if (car.getUser().getId() == -1) {
 			user = userRepository.findById(0L); //Long
 		}
-		return new ResponseEntity<>(carRepository.save(new Car(brand, colour, seats, speed, user)), HttpStatus.OK);
+		car.setUser(user);
+		return new ResponseEntity<>(carRepository.save(car), HttpStatus.OK);
 	}
 
 	@GetMapping("/car/get/{id}")
@@ -47,25 +43,23 @@ public class CarApiController {
 	}
 
 	@PutMapping("/car/update/{car_id}")
-	public ResponseEntity update(@PathVariable("car_id") Long car_id,
-	                             @RequestParam(defaultValue = "NO_BRAND") String brand,
-	                             @RequestParam(defaultValue = "NO_COLOUR") String colour,
-	                             @RequestParam(defaultValue = "-1") Integer seats,
-	                             @RequestParam(defaultValue = "-1") Integer speed,
-	                             @RequestParam(defaultValue = "-1") Long user_id
-	)
+	public ResponseEntity update(
+			@PathVariable("car_id") Long carId,
+			Car car)
 	{
-		Car car = carRepository.findOne(car_id);
-		car.setBrand(brand);
-		car.setColour(colour);
-		car.setSeats(seats);
-		car.setSpeed(speed);
-		User user = userRepository.findById(user_id);
-		if (user_id == -1) {
+		Car updateCar = carRepository.findOne(carId);
+		updateCar.setBrand(car.getBrand());
+		updateCar.setColour(car.getColour());
+		updateCar.setSeats(car.getSeats());
+		updateCar.setSpeed(car.getSpeed());
+		System.out.println(car.getUser().getId());
+		User user = userRepository.findById(car.getUser().getId());
+		if (car.getUser().getId() == -1) {
 			user = userRepository.findById(0L); //Long
 		}
-		car.setUser(user);
-		return new ResponseEntity<>(carRepository.save(car), HttpStatus.OK);
+		updateCar.setUser(user);
+		System.out.println(updateCar);
+		return new ResponseEntity<>(carRepository.save(updateCar), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/car/delete/{id}")

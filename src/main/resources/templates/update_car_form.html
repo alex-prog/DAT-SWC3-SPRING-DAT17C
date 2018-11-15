@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Survey Form</title>
@@ -29,6 +29,7 @@
         <div class="col-md-8">
             <label for="brand" id="name-label" class="col-form-label">Brand:</label>
             <input id="brand" type="text" class="form-control" placeholder="Brand" th:field="${car.brand}"/>
+            <input id="car-id" type="text" class="form-control" hidden="hidden" th:field="${car.id}"/>
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -36,7 +37,8 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <label for="colour" id="email-label" class="col-form-label">Colour:</label>
-            <input id="colour" type="text" class="form-control" placeholder="Colour" th:field="${car.colour}"/>
+            <input name="colour" id="colour" type="text" class="form-control" placeholder="Colour"
+                   th:field="${car.colour}"/>
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -44,7 +46,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <label for="seats" id="number-label" class="col-form-label">Seats:</label>
-            <input id="seats" type="number" class="form-control" placeholder="Seats" min="1" max="999"
+            <input name="seats" id="seats" type="number" class="form-control" placeholder="Seats" min="1" max="999"
                    th:field="${car.seats}"/>
         </div>
         <div class="col-md-2"></div>
@@ -53,7 +55,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <label for="speed" id="speed-label" class="col-form-label">Speed:</label>
-            <input id="speed" type="number" class="form-control" placeholder="Speed" min="1" max="9999"
+            <input name="speed" id="speed" type="number" class="form-control" placeholder="Speed" min="1" max="9999"
                    th:field="${car.speed}"/>
         </div>
         <div class="col-md-2"></div>
@@ -65,7 +67,7 @@
                 <label for="select">Select user:</label>
                 <select class="form-control" id="select-user" required="required" name="selected-user-id">
                     <option class="dropdown-item" th:each="user : ${users}"
-                            th:text="${user.getName()}" th:value="${user.id}">
+                            th:text="${user.getName()}" th:value="${user.id}" th:selected="${user.id == car.user.id}">
                     </option>
                 </select>
             </div>
@@ -75,19 +77,20 @@
     <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <button th:onclick=" 'javascript: createCar()'" class="btn btn-block btn-success">Save</button>
+            <button th:onclick=" 'javascript: updateCar(' + ${car.id} + ')'" class="btn btn-block btn-success">Update
+            </button>
         </div>
         <div class="col-md-2"></div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-    function createCar() {
-        console.log("djdjjd");
+    function updateCar(id) {
         $.ajax({
-            method: "POST",
-            url: "/car/new",
+            method: "PUT",
+            url: "/car/update/" + id,
             data: {
+                id: $("#car-id").val(),
                 brand: $("#brand").val(),
                 colour: $("#colour").val(),
                 seats: $("#seats").val(),

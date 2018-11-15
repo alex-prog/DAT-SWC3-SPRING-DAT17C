@@ -3,14 +3,12 @@ package dk.kea.swc3.dat17c.demo.controller;
 import dk.kea.swc3.dat17c.demo.CarRepository;
 import dk.kea.swc3.dat17c.demo.UserRepository;
 import dk.kea.swc3.dat17c.demo.model.Car;
-import dk.kea.swc3.dat17c.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CarController {
@@ -33,24 +31,16 @@ public class CarController {
 	}
 
 	@GetMapping("/car/save")
-	public String saveCarToDB(Model model){
-		List<User> users = userRepository.getAllByNameNotNull();
+	public String saveCarToDB(Model model) {
 		model.addAttribute("car", new Car());
-		model.addAttribute("users", users);
+		model.addAttribute("users", userRepository.getAllByNameNotNull());
 		return "save_car_form";
 	}
 
-	@PostMapping("/car/save")
-	public String saveIt(Car car, @RequestParam("selected-user-id") Long id
-	)
-	{
-		car.setUser(userRepository.findById(id));
-		if (car.getUser() == null){
-			User user = new User("NO_NAME", -1, 'N');
-			car.setUser(user);
-			userRepository.save(user);
-		}
-		carRepository.save(car);
-		return "redirect:/cars";
+	@GetMapping("/car/update/{car-id}")
+	public String updateCarGetMapping(@PathVariable("car-id") Long carId, Model model) {
+		model.addAttribute("car", carRepository.getCarById(carId));
+		model.addAttribute("users", userRepository.getAllByNameNotNull());
+		return "update_car_form";
 	}
 }

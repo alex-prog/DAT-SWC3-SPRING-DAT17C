@@ -29,7 +29,8 @@
         <td th:text="${car.speed}"></td>
         <td th:text="${car.user.getName()}"></td>
         <td class="float-right">
-            <button th:onclick="'javascript:deleteCar(' + ${car.id} + ')'" class="btn btn-danger">Delete</button>
+            <a th:href="@{'/car/update/' + ${car.id}}" class="btn btn-primary">Update</a>
+            <button th:onclick=" 'javascript: deleteCar(' + ${car.id} + ')'" class="btn btn-danger">Delete</button>
         </td>
     </tr>
     </tbody>
