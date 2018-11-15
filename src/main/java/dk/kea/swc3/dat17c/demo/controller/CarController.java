@@ -64,4 +64,11 @@ public class CarController {
         return "OK";
     }
 
+
+    @GetMapping("/car/create")
+    public String newCarView(Model m){
+        m.addAttribute("car",new Car());
+        return "carNew";
+    }
+
 }

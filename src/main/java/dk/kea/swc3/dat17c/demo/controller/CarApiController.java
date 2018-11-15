@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class CarApiController {
 
@@ -27,5 +29,18 @@ public class CarApiController {
     @DeleteMapping("/car/delete/{id}")
     public ResponseEntity<Car> deleteCar(){
         return new ResponseEntity(null, HttpStatus.FORBIDDEN);
+    }
+
+
+    @GetMapping("/car/get")
+    public ResponseEntity<List> getAllCars(){
+        List<Car> cars = carRepo.findAll();
+        return new ResponseEntity(cars, HttpStatus.OK);
+    }
+
+    @PostMapping("/car/new")
+    public ResponseEntity<Car> saveCar(Car car){
+        Car newCar = carRepo.save(car);
+        return new ResponseEntity(newCar, HttpStatus.OK);
     }
 }

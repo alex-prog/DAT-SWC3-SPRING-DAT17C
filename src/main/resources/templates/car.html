@@ -44,6 +44,14 @@
         <td th:text="${car.doors}">{{doors}}</td>
     </tr>
 
+    <tr th:each="car:${carsToBeSendToView}">
+        <td th:text="${car.brand}">{{brand}}</td>
+        <td th:text="${car.color}">{{color}}</td>
+        <td th:text="${car.doors}">{{doors}}</td>
+        <td th:text="${car.user.name}">{{owner}}</td>
+        <td><button type="submit" class="carButton" th:data-car="${car.id}">DELETE</button></td>
+    </tr>
+
     </tbody>
 </table>
 
@@ -63,6 +71,15 @@
     } else {
         $('#nav_top').addClass('bg-danger');
     }
+
+
+
+    $(document).on("click",".carButton",function () {
+        console.log("Button press");
+        var carId = $(this).data("data-car");
+        console.log(carId);
+
+    })
 
 </script>
 
